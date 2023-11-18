@@ -6,10 +6,10 @@ const Navbar = () => {
     <header>
       <div className="container">
         <Link to="/">
-          <h1>Workout Buddy</h1>
+          <h1>My Recipes</h1>
         </Link>
         <Link to="/create">
-          <h1>Add Workout</h1>
+          <h1>Add Recipe</h1>
         </Link>
       </div>
     </header>

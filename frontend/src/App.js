@@ -2,10 +2,10 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 // pages & components
 import Home from './pages/Home'
-import Workout from './pages/Workout'
+import Recipe from './pages/Recipe'
 import Navbar from './components/Navbar'
-import WorkoutForm from './pages/WorkoutForm'
-import EditWorkout from './pages/EditWorkout'
+import RecipeForm from './pages/RecipeForm'
+import EditRecipe from './pages/EditRecipe'
 
 function App() {
 
@@ -20,16 +20,16 @@ function App() {
               element={<Home />} 
             />
             <Route 
-              path="/api/workouts/:id" 
-              element={<Workout />} 
+              path="/:id" 
+              element={<Recipe />} 
             />
             <Route 
               path="/create" 
-              element={<WorkoutForm />} 
+              element={<RecipeForm />} 
             />
             <Route 
               path="/edit/:id" 
-              element={<EditWorkout />} 
+              element={<EditRecipe />} 
             />
           </Routes>
         </div>
