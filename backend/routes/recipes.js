@@ -10,7 +10,14 @@ const {
   updateRecipe
 } = require('../controllers/recipeController')
 
+// Validates the authentication token and lets the code proceed with routing only
+// if the token is valid
+const requireAuth = require('../middleware/requireAuth')
+
 const router = express.Router()
+
+// require authentication for all recipe routes
+router.use(requireAuth)
 
 // GET all recipes
 router.get('/', getRecipes)

@@ -12,9 +12,9 @@ export const recipesReducer = (state, action) => {
       return { 
         recipes: [action.payload, ...state.recipes] 
       }
-    case 'DELETE_WORKOUT':
+    case 'DELETE_RECIPE':
       return { 
-        workouts: state.workouts.filter(w => w._id !== action.payload._id) 
+        recipes: state.recipes.filter(w => w._id !== action.payload._id) 
       }
     // case 'UPDATE_RECIPE':
     // const updatedRecipes = state.recipes.map(recipe => 

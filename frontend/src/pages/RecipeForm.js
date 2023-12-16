@@ -5,9 +5,12 @@ import { useRecipesContext } from "../hooks/useRecipesContext"
 
 import { useState } from 'react'
 import { useNavigate } from "react-router-dom";
+import { useAuthContext } from '../hooks/useAuthContext'
+
 
 const RecipeForm = () => {
   
+  const { user } = useAuthContext()
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('');
   const [cookingTime, setCookingTime] = useState('');
@@ -21,7 +24,7 @@ const RecipeForm = () => {
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    //prevents the default submission
+    //prevents the page from being refreshed after the form submissiion
     e.preventDefault()
 
     const recipe = {title, category, cookingTime, ingredients, instructions, imageUrl}
@@ -30,7 +33,8 @@ const RecipeForm = () => {
       method: 'POST',
       body: JSON.stringify(recipe),
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${user.token}`
       }
     })
 

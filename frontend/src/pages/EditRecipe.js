@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuthContext } from "../hooks/useAuthContext"
 
 const EditRecipeForm = () => {
   const [title, setTitle] = useState('');
@@ -15,6 +16,7 @@ const EditRecipeForm = () => {
   const [emptyFields, setEmptyFields] = useState([]);
   const navigate = useNavigate();
   const { id } = useParams();
+  const {user} = useAuthContext()
 
   //fetches the recipe to be changed from the database so that further fill in the form with this data
   const useFetch = (url) => {
@@ -25,7 +27,9 @@ const EditRecipeForm = () => {
     useEffect(() => {
       const fetchData = async () => {
         try {
-          const response = await fetch(url);
+          const response = await fetch(url, {
+            headers: {'Authorization': `Bearer ${user.token}`},
+          });
 
           if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -47,7 +51,11 @@ const EditRecipeForm = () => {
     return { data, error, loading };
   };
 
-  const apiUrl = `http://localhost:3000/api/${id}`;
+  // const apiUrl = `http://localhost:3000/api/${id}`;
+  const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  const baseUrl = isLocalhost ? 'http://localhost:3000' : ''; 
+  const apiUrl = `${baseUrl}/api/${id}`;
+
 
   const { data: oldRecipe, error: fetchError, loading: fetchLoading } = useFetch(apiUrl);
 
@@ -84,6 +92,7 @@ const EditRecipeForm = () => {
         body: JSON.stringify(newRecipe),
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${user.token}`
         },
       });
 

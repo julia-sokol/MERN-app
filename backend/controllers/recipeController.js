@@ -1,9 +1,13 @@
+//This file contains functions that are fired as a responses for certain requests.
+// They are exported to the file '../routes/recipe'.
+
 const Recipe = require('../models/recipeModel')
 const mongoose = require('mongoose')
 
 // get all Recipes
 const getRecipes = async (req, res) => {
-  const recipes = await Recipe.find({}).sort({createdAt: -1})
+  const user_id = req.user._id
+  const recipes = await Recipe.find({user_id}).sort({createdAt: -1})
 
   res.status(200).json(recipes)
 }
@@ -49,8 +53,8 @@ const createRecipe = async (req, res) => {
 
   //add to the database
   try {
-    const recipe = await Recipe.create({ title, category, cookingTime, ingredients, instructions, imageUrl })
-
+    const user_id = req.user._id
+    const recipe = await Recipe.create({ title, category, cookingTime, ingredients, instructions, imageUrl, user_id })
     res.status(200).json(recipe)
   } catch (error) {
     res.status(403).json({ error: error.message })
